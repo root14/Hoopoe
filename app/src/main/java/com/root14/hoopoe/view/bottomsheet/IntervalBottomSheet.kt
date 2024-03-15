@@ -1,7 +1,6 @@
-package com.root14.hoopoe
+package com.root14.hoopoe.view.bottomsheet
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.root14.hoopoe.databinding.FragmentMainBottomSheetBinding
 import com.root14.hoopoe.view.adapter.IntervalRecycleAdapter
 
-class MainBottomSheet : BottomSheetDialogFragment() {
+class IntervalBottomSheet : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentMainBottomSheetBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

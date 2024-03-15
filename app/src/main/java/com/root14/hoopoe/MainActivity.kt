@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.root14.hoopoe.databinding.ActivityMainBinding
 import com.root14.hoopoe.view.adapter.CoinRecycleAdapter
+import com.root14.hoopoe.view.bottomsheet.IntervalBottomSheet
 import com.root14.hoopoe.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.progressIndicator.isIndeterminate = false
 
-        val modalBottomSheet = MainBottomSheet()
+        val modalBottomSheet = IntervalBottomSheet()
         binding.btn7d.setOnClickListener {
             modalBottomSheet.show(supportFragmentManager, "")
         }
