@@ -5,7 +5,6 @@ import retrofit2.Response
 import retrofit2.http.GET
 
 interface IApiService {
-
     @GET("assets")
     suspend fun getAssets(): Response<Assets>
 }

@@ -13,8 +13,9 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(private val mainRepository: MainRepository) : ViewModel() {
 
+    //TODO handle slow bandwidth loading state
     private val _assets = MutableLiveData<Assets>()
-    fun getAssests(): LiveData<Assets> {
+    fun updateCoinList(): LiveData<Assets> {
         viewModelScope.launch {
             mainRepository.getUsers().let {
                 _assets.value = it

@@ -22,14 +22,16 @@ class MainActivity : AppCompatActivity() {
 
         binding.progressIndicator.isIndeterminate = false
 
-        val result = mainViewModel.getAssests().observe(this) { it ->
-            val dummy = it
-            dummy.let {
-                val adapter = CoinRecycleAdapter(dummy)
-                binding.rwCoinMain.adapter = adapter
+        val modalBottomSheet = MainBottomSheet()
+        binding.btn7d.setOnClickListener {
+            modalBottomSheet.show(supportFragmentManager, "")
+        }
+
+        mainViewModel.updateCoinList().observe(this) { assets ->
+            assets.let { _assets ->
+                binding.rwCoinMain.adapter = CoinRecycleAdapter(_assets)
                 binding.rwCoinMain.layoutManager = LinearLayoutManager(this)
                 binding.rwCoinMain.setHasFixedSize(true)
-
             }
         }
     }
