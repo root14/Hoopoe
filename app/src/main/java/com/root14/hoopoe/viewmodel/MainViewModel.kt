@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(val mainRepository: MainRepository) : ViewModel() {
+class MainViewModel @Inject constructor(private val mainRepository: MainRepository) : ViewModel() {
 
     private val _assets = MutableLiveData<Assets>()
     fun getAssests(): LiveData<Assets> {

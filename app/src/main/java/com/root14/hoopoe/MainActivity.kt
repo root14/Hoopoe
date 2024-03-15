@@ -3,7 +3,9 @@ package com.root14.hoopoe
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.root14.hoopoe.databinding.ActivityMainBinding
+import com.root14.hoopoe.view.adapter.CoinRecycleAdapter
 import com.root14.hoopoe.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,10 +22,14 @@ class MainActivity : AppCompatActivity() {
 
         binding.progressIndicator.isIndeterminate = false
 
-        val result = mainViewModel.getAssests().observe(this) {
+        val result = mainViewModel.getAssests().observe(this) { it ->
             val dummy = it
             dummy.let {
-                println("asd")
+                val adapter = CoinRecycleAdapter(dummy)
+                binding.rwCoinMain.adapter = adapter
+                binding.rwCoinMain.layoutManager = LinearLayoutManager(this)
+                binding.rwCoinMain.setHasFixedSize(true)
+
             }
         }
     }
