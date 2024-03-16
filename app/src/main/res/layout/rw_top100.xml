@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
-            name="interval"
+            name="top100"
             type="String" />
     </data>
 
@@ -13,14 +14,14 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/tw_priceChangeInterval"
+            android:id="@+id/tw_top100"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="@{interval}"
-            android:textSize="14sp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:text="@{top100}"
+            android:textSize="28sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

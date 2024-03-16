@@ -6,14 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.root14.hoopoe.databinding.FragmentMainBottomSheetBinding
+import com.root14.hoopoe.databinding.FragmentIntervalBottomSheetBinding
 import com.root14.hoopoe.view.adapter.IntervalRecycleAdapter
 
 class IntervalBottomSheet : BottomSheetDialogFragment() {
-    private lateinit var binding: FragmentMainBottomSheetBinding
+    private lateinit var binding: FragmentIntervalBottomSheetBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = FragmentMainBottomSheetBinding.inflate(layoutInflater)
+        binding = FragmentIntervalBottomSheetBinding.inflate(layoutInflater)
     }
 
     override fun onCreateView(

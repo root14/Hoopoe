@@ -14,7 +14,6 @@ class CoinRecycleAdapter(private val assets: Assets) :
 
     private lateinit var binding: RwCoinBinding
 
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int

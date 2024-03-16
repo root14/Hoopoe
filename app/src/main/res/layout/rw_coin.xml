@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="assets"
             type="com.root14.hoopoe.data.model.AssetsData" />
@@ -13,11 +14,12 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/imageView_coinImage"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            app:bindIcon="@{assets.symbol}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/twotone_android_24" />
@@ -28,8 +30,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@{assets.name}"
-            app:layout_constraintStart_toEndOf="@+id/imageView2"
-            app:layout_constraintTop_toTopOf="@+id/imageView2" />
+            app:layout_constraintStart_toEndOf="@+id/imageView_coinImage"
+            app:layout_constraintTop_toTopOf="@+id/imageView_coinImage" />
 
         <TextView
             android:id="@+id/tw_coinPrice"

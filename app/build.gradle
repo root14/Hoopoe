@@ -58,6 +58,7 @@ dependencies {
     implementation libs.retrofit
     implementation libs.retrofit2.kotlin.coroutines.adapter
     implementation libs.androidx.activity.ktx
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
 }
 
 kapt {

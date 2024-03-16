@@ -5,8 +5,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.root14.hoopoe.databinding.ActivityMainBinding
+import com.root14.hoopoe.utils.Url
 import com.root14.hoopoe.view.adapter.CoinRecycleAdapter
 import com.root14.hoopoe.view.bottomsheet.IntervalBottomSheet
+import com.root14.hoopoe.view.bottomsheet.MainBottomSheet
 import com.root14.hoopoe.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,9 +25,13 @@ class MainActivity : AppCompatActivity() {
 
         binding.progressIndicator.isIndeterminate = false
 
-        val modalBottomSheet = IntervalBottomSheet()
+        val intervalBottomSheet = IntervalBottomSheet()
         binding.btn7d.setOnClickListener {
-            modalBottomSheet.show(supportFragmentManager, "")
+            intervalBottomSheet.show(supportFragmentManager, "")
+        }
+        val mainBottomSheet = MainBottomSheet()
+        binding.btnTop100.setOnClickListener {
+            mainBottomSheet.show(supportFragmentManager, "")
         }
 
         mainViewModel.updateCoinList().observe(this) { assets ->

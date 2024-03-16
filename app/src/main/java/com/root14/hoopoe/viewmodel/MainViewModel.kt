@@ -15,6 +15,9 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
 
     //TODO handle slow bandwidth loading state
     private val _assets = MutableLiveData<Assets>()
+    val assets: LiveData<Assets>
+        get() = _assets
+
     fun updateCoinList(): LiveData<Assets> {
         viewModelScope.launch {
             mainRepository.getUsers().let {

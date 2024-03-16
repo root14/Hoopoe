@@ -2,6 +2,7 @@ package com.root14.hoopoe.di
 
 import com.root14.hoopoe.data.api.IApiService
 import com.root14.hoopoe.data.repository.MainRepository
+import com.root14.hoopoe.utils.Url
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +16,7 @@ import javax.inject.Singleton
 object BaseModule {
 
     @Provides
-    fun provideBaseUrl(): String = "https://api.coincap.io/v2/"
+    fun provideBaseUrl() = Url.baseUrl
 
     @Provides
     @Singleton
