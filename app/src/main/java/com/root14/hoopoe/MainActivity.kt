@@ -33,8 +33,14 @@ class MainActivity : AppCompatActivity() {
         binding.btnTop100.setOnClickListener {
             mainBottomSheet.show(supportFragmentManager, "")
         }
+        //sort price
         binding.twPriceSort.setOnClickListener {
             mainViewModel.sortPrice()
+            binding.rwCoinMain.adapter?.notifyDataSetChanged()
+        }
+        //sort 24h
+        binding.tw24h.setOnClickListener {
+            mainViewModel.sort24d()
             binding.rwCoinMain.adapter?.notifyDataSetChanged()
         }
 

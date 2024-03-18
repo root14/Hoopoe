@@ -28,9 +28,9 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
         return _assets
     }
 
-    private var sortType: SortType = SortType.NOT_SORTED
+    private var sortTypePrice: SortType = SortType.NOT_SORTED
     fun sortPrice() {
-        sortType = if (sortType == SortType.DESCENDING) {
+        sortTypePrice = if (sortTypePrice == SortType.DESCENDING) {
             _assets.value?.data?.sortBy { price ->
                 price.priceUsd?.takeWhile {
                     it != '.'
@@ -45,6 +45,24 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
             }
             SortType.DESCENDING
         }
+    }
 
+    private var sortType7d: SortType = SortType.NOT_SORTED
+    fun sort24d() {
+        sortType7d = if (sortType7d == SortType.DESCENDING) {
+            _assets.value?.data?.sortBy { price ->
+                price.changePercent24Hr?.takeWhile {
+                    it != '.'
+                }?.toInt()
+            }
+            SortType.ASCENDING
+        } else {
+            _assets.value?.data?.sortByDescending { price ->
+                price.changePercent24Hr?.takeWhile {
+                    it != '.'
+                }?.toInt()
+            }
+            SortType.DESCENDING
+        }
     }
 }

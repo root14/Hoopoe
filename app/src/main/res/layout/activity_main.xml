@@ -131,10 +131,10 @@
             app:layout_constraintStart_toEndOf="@+id/textView4" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/tw_24h"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="7d%"
+            android:text="24h%"
             app:layout_constraintBottom_toTopOf="@+id/rw_coinMain"
             app:layout_constraintEnd_toEndOf="@+id/rw_coinMain" />
 
@@ -146,7 +146,7 @@
             android:clickable="true"
             android:text="Price"
             app:layout_constraintBottom_toTopOf="@+id/rw_coinMain"
-            app:layout_constraintEnd_toStartOf="@+id/textView6" />
+            app:layout_constraintEnd_toStartOf="@+id/tw_24h" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
