@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.root14.hoopoe.data.enum.SortType
 import com.root14.hoopoe.data.model.Assets
 import com.root14.hoopoe.data.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,4 +28,23 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
         return _assets
     }
 
+    private var sortType: SortType = SortType.NOT_SORTED
+    fun sortPrice() {
+        sortType = if (sortType == SortType.DESCENDING) {
+            _assets.value?.data?.sortBy { price ->
+                price.priceUsd?.takeWhile {
+                    it != '.'
+                }?.toInt()
+            }
+            SortType.ASCENDING
+        } else {
+            _assets.value?.data?.sortByDescending { price ->
+                price.priceUsd?.takeWhile {
+                    it != '.'
+                }?.toInt()
+            }
+            SortType.DESCENDING
+        }
+
+    }
 }

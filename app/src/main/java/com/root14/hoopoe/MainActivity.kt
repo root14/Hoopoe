@@ -33,12 +33,17 @@ class MainActivity : AppCompatActivity() {
         binding.btnTop100.setOnClickListener {
             mainBottomSheet.show(supportFragmentManager, "")
         }
+        binding.twPriceSort.setOnClickListener {
+            mainViewModel.sortPrice()
+            binding.rwCoinMain.adapter?.notifyDataSetChanged()
+        }
 
         mainViewModel.updateCoinList().observe(this) { assets ->
             assets.let { _assets ->
                 binding.rwCoinMain.adapter = CoinRecycleAdapter(_assets)
                 binding.rwCoinMain.layoutManager = LinearLayoutManager(this)
                 binding.rwCoinMain.setHasFixedSize(true)
+
             }
         }
     }
