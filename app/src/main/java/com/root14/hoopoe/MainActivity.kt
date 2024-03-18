@@ -29,6 +29,9 @@ class MainActivity : AppCompatActivity() {
         binding.btnTop100.setOnClickListener {
             mainBottomSheet.show(supportFragmentManager, "")
         }
+        binding.btnSearch.setOnClickListener {
+            mainBottomSheet.show(supportFragmentManager, "")
+        }
         //sort price
         binding.twPriceSort.setOnClickListener {
             mainViewModel.sortPrice()
@@ -39,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             mainViewModel.sort24d()
             binding.rwCoinMain.adapter?.notifyDataSetChanged()
         }
-
+        //sort rank
         binding.twRank.setOnClickListener {
             mainViewModel.sortRank()
             binding.rwCoinMain.adapter?.notifyDataSetChanged()
