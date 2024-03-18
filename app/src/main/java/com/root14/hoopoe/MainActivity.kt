@@ -25,10 +25,6 @@ class MainActivity : AppCompatActivity() {
 
         binding.progressIndicator.isIndeterminate = false
 
-        val intervalBottomSheet = IntervalBottomSheet()
-        binding.btn7d.setOnClickListener {
-            intervalBottomSheet.show(supportFragmentManager, "")
-        }
         val mainBottomSheet = MainBottomSheet()
         binding.btnTop100.setOnClickListener {
             mainBottomSheet.show(supportFragmentManager, "")
@@ -44,12 +40,16 @@ class MainActivity : AppCompatActivity() {
             binding.rwCoinMain.adapter?.notifyDataSetChanged()
         }
 
+        binding.twRank.setOnClickListener {
+            mainViewModel.sortRank()
+            binding.rwCoinMain.adapter?.notifyDataSetChanged()
+        }
+
         mainViewModel.updateCoinList().observe(this) { assets ->
-            assets.let { _assets ->
-                binding.rwCoinMain.adapter = CoinRecycleAdapter(_assets)
+            assets.let {
+                binding.rwCoinMain.adapter = CoinRecycleAdapter(it)
                 binding.rwCoinMain.layoutManager = LinearLayoutManager(this)
                 binding.rwCoinMain.setHasFixedSize(true)
-
             }
         }
     }
