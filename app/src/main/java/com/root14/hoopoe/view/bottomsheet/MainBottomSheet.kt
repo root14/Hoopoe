@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.root14.hoopoe.databinding.FragmentMainBottomSheetBinding
-import com.root14.hoopoe.view.adapter.IntervalRecycleAdapter
+import com.root14.hoopoe.view.adapter.MainBottomSheetAdapter
 
 
 class MainBottomSheet : BottomSheetDialogFragment() {
@@ -23,7 +23,7 @@ class MainBottomSheet : BottomSheetDialogFragment() {
     ): View {
 
         val mainBottomSheetList = arrayListOf("Top 100", "Top 200", "Top 500", "All Coins")
-        binding.rwBottomSheetMain.adapter = IntervalRecycleAdapter(mainBottomSheetList)
+        binding.rwBottomSheetMain.adapter = MainBottomSheetAdapter(mainBottomSheetList)
         binding.rwBottomSheetMain.layoutManager = LinearLayoutManager(binding.root.context)
         binding.rwBottomSheetMain.setHasFixedSize(true)
 
