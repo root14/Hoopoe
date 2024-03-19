@@ -12,6 +12,9 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    //It skips mainBottomSheet.dismiss() in the init phase and then closes the bottomSheet when recyclerview change.
+    private var initializer: Boolean = false
+    
     private lateinit var binding: ActivityMainBinding
 
     private val mainViewModel: MainViewModel by viewModels()
@@ -24,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         binding.progressIndicator.isIndeterminate = false
 
         val mainBottomSheet = MainBottomSheet()
+
         binding.btnTop100.setOnClickListener {
             mainBottomSheet.show(supportFragmentManager, "")
         }
@@ -46,12 +50,19 @@ class MainActivity : AppCompatActivity() {
             binding.rwCoinMain.adapter?.notifyDataSetChanged()
         }
 
-        mainViewModel.updateCoinList().observe(this) { assets ->
+
+        //initial value
+        mainViewModel.updateCoinList("100").observe(this) { assets ->
             assets.let {
                 binding.rwCoinMain.adapter = CoinRecycleAdapter(it)
                 binding.rwCoinMain.layoutManager = LinearLayoutManager(this)
                 binding.rwCoinMain.setHasFixedSize(true)
+                if (initializer) {
+                    mainBottomSheet.dismiss()
+                }
+                initializer = true
             }
         }
+
     }
 }

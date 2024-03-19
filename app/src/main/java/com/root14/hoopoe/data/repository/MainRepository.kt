@@ -5,8 +5,9 @@ import com.root14.hoopoe.data.model.Assets
 
 class MainRepository(private val iApiService: IApiService) {
 
-    suspend fun getUsers(): Assets? {
-        val result = iApiService.getAssets()
+    //TODO pass 100 200 500 2000 asset data to api
+    suspend fun getAssets(limit: String): Assets? {
+        val result = iApiService.getAssets(limit)
         return if (result.isSuccessful) {
             //cache on inMemoryRoomDb
             //if there is a data on db provide that

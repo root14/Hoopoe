@@ -20,9 +20,9 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
     val assets: LiveData<Assets>
         get() = _assets
 
-    fun updateCoinList(): LiveData<Assets> {
+    fun updateCoinList(limit: String): LiveData<Assets> {
         viewModelScope.launch {
-            mainRepository.getUsers().let {
+            mainRepository.getAssets(limit).let {
                 _assets.value = it
             }
         }
@@ -82,14 +82,13 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
         }
     }
 
-
     private val _bottomSheetSortList = MutableLiveData<List<SortTop>>().apply {
         postValue(
             arrayListOf(
-                SortTop("Top 100", true),
-                SortTop("Top 200", false),
-                SortTop("Top 500", false),
-                SortTop("All Coins", false)
+                SortTop("Top 100", true, "100"),
+                SortTop("Top 200", false, "200"),
+                SortTop("Top 500", false, "500"),
+                SortTop("All Coins", false, "2000")
             )
         )
     }
@@ -100,7 +99,12 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
         _bottomSheetSortList.value?.forEach {
             it.selected = false
         }
-        _bottomSheetSortList.value?.get(selectedIndex)?.selected = true
-    }
 
+        viewModelScope.launch {
+            mainRepository.getAssets(_bottomSheetSortList.value!![selectedIndex].value).let {
+                _assets.value = it
+            }
+            _bottomSheetSortList.value?.get(selectedIndex)?.selected = true
+        }
+    }
 }

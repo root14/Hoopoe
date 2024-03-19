@@ -31,13 +31,13 @@ class MainBottomSheet() : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        //FIXME not obverving
-        mainViewModel.bottomSheetSortList.observe(viewLifecycleOwner) {
+        mainViewModel.bottomSheetSortList.value?.let {
             binding.rwBottomSheetMain.adapter = MainBottomSheetAdapter(it, mainViewModel)
         }
 
         binding.rwBottomSheetMain.layoutManager = LinearLayoutManager(binding.root.context)
         binding.rwBottomSheetMain.setHasFixedSize(true)
+
 
         return binding.root
     }
