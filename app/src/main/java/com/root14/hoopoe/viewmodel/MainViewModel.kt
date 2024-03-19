@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.root14.hoopoe.data.enum.SortType
 import com.root14.hoopoe.data.model.Assets
+import com.root14.hoopoe.data.model.SortTop
 import com.root14.hoopoe.data.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -79,6 +80,27 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
             }
             SortType.DESCENDING
         }
+    }
+
+
+    private val _bottomSheetSortList = MutableLiveData<List<SortTop>>().apply {
+        postValue(
+            arrayListOf(
+                SortTop("Top 100", true),
+                SortTop("Top 200", false),
+                SortTop("Top 500", false),
+                SortTop("All Coins", false)
+            )
+        )
+    }
+    val bottomSheetSortList: LiveData<List<SortTop>>
+        get() = _bottomSheetSortList
+
+    fun selectTop(selectedIndex: Int) {
+        _bottomSheetSortList.value?.forEach {
+            it.selected = false
+        }
+        _bottomSheetSortList.value?.get(selectedIndex)?.selected = true
     }
 
 }
