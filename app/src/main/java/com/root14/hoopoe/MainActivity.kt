@@ -14,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     //It skips mainBottomSheet.dismiss() in the init phase and then closes the bottomSheet when recyclerview change.
     private var initializer: Boolean = false
-    
+
     private lateinit var binding: ActivityMainBinding
 
     private val mainViewModel: MainViewModel by viewModels()
