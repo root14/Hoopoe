@@ -1,11 +1,13 @@
 package com.root14.hoopoe.viewmodel
 
+import android.text.Editable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.root14.hoopoe.data.enum.SortType
 import com.root14.hoopoe.data.model.Assets
+import com.root14.hoopoe.data.model.AssetsData
 import com.root14.hoopoe.data.model.SortTop
 import com.root14.hoopoe.data.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -106,5 +108,15 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
             }
             _bottomSheetSortList.value?.get(selectedIndex)?.selected = true
         }
+    }
+
+    //search query
+    //must just return query items
+    //do it on background thread
+    fun query(query: String): Boolean? {
+        val data0 = assets.value?.data
+        val data = AssetsData(symbol = "BTC")
+        return data0?.conta(data)
+
     }
 }
