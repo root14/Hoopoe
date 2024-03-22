@@ -1,11 +1,9 @@
 package com.root14.hoopoe.viewmodel
 
-import android.R.attr.data
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.root14.hoopoe.data.*
 import com.root14.hoopoe.data.enum.SortType
 import com.root14.hoopoe.data.model.Assets
 import com.root14.hoopoe.data.model.AssetsData
@@ -14,6 +12,7 @@ import com.root14.hoopoe.data.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
@@ -113,20 +112,23 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
         }
     }
 
-    fun query(query: String): MutableList<AssetsData> {
+    //TODO add symbol search like BTC,ADA...
+    fun query(query: String): Assets {
         val dataArray = _assets.value?.data
-        val resultArray = mutableListOf<AssetsData>()
+        val resultArray = arrayListOf<AssetsData>()
+
         viewModelScope.launch(Dispatchers.Default) {
             if (dataArray != null) {
-                for (i in dataArray.indices) {
-                    val data0 = dataArray[i]
-                    if (data0.name!!.contains(query.uppercase()) or data0.name!!.contains(query.lowercase())) {
+                for (data0 in dataArray) {
+                    val name = data0.name ?: continue
+                    if (name.contains(query, ignoreCase = true)) {
                         resultArray.add(data0)
                     }
                 }
             }
+
         }
-        return resultArray
+        return Assets(data = resultArray)
     }
 }
 

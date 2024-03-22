@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.root14.hoopoe.databinding.FragmentMainBottomSheetBinding
 import com.root14.hoopoe.view.adapter.MainBottomSheetAdapter
 import com.root14.hoopoe.view.adapter.MainBottomSheetSearchAdapter
 import com.root14.hoopoe.viewmodel.MainViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 //manual injection caused by @AndroidEntryPoint not working with BottomSheetDialogFragment
@@ -36,9 +38,6 @@ class MainBottomSheet() : BottomSheetDialogFragment() {
         binding.rwBottomSheetMain.setHasFixedSize(true)
 
 
-        binding.rwBottomSheetMainSearch.adapter =
-            MainBottomSheetSearchAdapter(mainViewModel.assets.value!!)
-
         binding.rwBottomSheetMainSearch.layoutManager = LinearLayoutManager(binding.root.context)
         binding.rwBottomSheetMainSearch.setHasFixedSize(true)
 
@@ -49,9 +48,12 @@ class MainBottomSheet() : BottomSheetDialogFragment() {
             return@setOnEditorActionListener false
         }
 
+        //searchbar query
         binding.bottomSheetSearchSearchView.editText.addTextChangedListener {
             val data = mainViewModel.query(it.toString())
-
+            lifecycleScope.launch(Dispatchers.Main) {
+                binding.rwBottomSheetMainSearch.adapter = MainBottomSheetSearchAdapter(data)
+            }
         }
 
         return binding.root
