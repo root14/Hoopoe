@@ -1,18 +1,21 @@
 package com.root14.hoopoe.viewmodel
 
-import android.text.Editable
+import android.R.attr.data
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.root14.hoopoe.data.*
 import com.root14.hoopoe.data.enum.SortType
 import com.root14.hoopoe.data.model.Assets
 import com.root14.hoopoe.data.model.AssetsData
 import com.root14.hoopoe.data.model.SortTop
 import com.root14.hoopoe.data.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 @HiltViewModel
 class MainViewModel @Inject constructor(private val mainRepository: MainRepository) : ViewModel() {
@@ -110,13 +113,20 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
         }
     }
 
-    //search query
-    //must just return query items
-    //do it on background thread
-    fun query(query: String): Boolean? {
-        val data0 = assets.value?.data
-        val data = AssetsData(symbol = "BTC")
-        return data0?.conta(data)
-
+    fun query(query: String): MutableList<AssetsData> {
+        val dataArray = _assets.value?.data
+        val resultArray = mutableListOf<AssetsData>()
+        viewModelScope.launch(Dispatchers.Default) {
+            if (dataArray != null) {
+                for (i in dataArray.indices) {
+                    val data0 = dataArray[i]
+                    if (data0.name!!.contains(query.uppercase()) or data0.name!!.contains(query.lowercase())) {
+                        resultArray.add(data0)
+                    }
+                }
+            }
+        }
+        return resultArray
     }
 }
+

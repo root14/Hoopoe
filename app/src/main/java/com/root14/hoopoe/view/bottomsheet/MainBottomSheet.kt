@@ -51,8 +51,9 @@ class MainBottomSheet() : BottomSheetDialogFragment() {
 
         binding.bottomSheetSearchSearchView.editText.addTextChangedListener {
             val data = mainViewModel.query(it.toString())
-            println(data)
+
         }
+
         return binding.root
     }
 }
