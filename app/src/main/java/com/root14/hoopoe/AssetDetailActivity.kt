@@ -10,6 +10,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IFillFormatter
+import com.root14.hoopoe.data.model.Interval
 import com.root14.hoopoe.databinding.ActivityAssetDetailBinding
 import com.root14.hoopoe.viewmodel.DetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,6 +35,11 @@ class AssetDetailActivity : AppCompatActivity() {
             detailViewModel.getIntervalData("bitcoin").observe(this) { changeRate ->
                 binding.changeRate = changeRate
             }
+
+            detailViewModel.getChartIntervalData("bitcoin", 30).observe(this) { interval ->
+                setData(interval)
+
+            }
         }
 
         //TODO make search icon work again -> show mainScreen search bottom sheet
@@ -43,11 +49,9 @@ class AssetDetailActivity : AppCompatActivity() {
         val chart = binding.chartAsset
 
 
-        setData(30, 10f)
-
     }
 
-    private fun setData(count: Int, range: Float) {
+    private fun setData(interval: Interval) {
         val chart = binding.chartAsset
         chart.setViewPortOffsets(0f, 0f, 0f, 0f)
         chart.setBackgroundColor(Color.BLACK)
@@ -80,10 +84,10 @@ class AssetDetailActivity : AppCompatActivity() {
         chart.invalidate()
 
         val values = ArrayList<Entry>()
-        for (i in 0 until count) {
-            val `val` = (Math.random() * (range + 1)).toFloat() + 20
+        for (i in 0 until interval.data.size) {
+
             //put time and price
-            values.add(Entry(i.toFloat(), `val`))
+            values.add(Entry(i.toFloat(), interval.data[i].priceUsd!!.toFloat()))
         }
         val set1: LineDataSet
         if (chart.data != null && chart.data.getDataSetCount() > 0) {
@@ -92,7 +96,6 @@ class AssetDetailActivity : AppCompatActivity() {
             chart.data.notifyDataChanged()
             chart.notifyDataSetChanged()
         } else {
-            // create a dataset and give it a type
             set1 = LineDataSet(values, "DataSet")
             set1.mode = LineDataSet.Mode.HORIZONTAL_BEZIER
             set1.setCubicIntensity(0.2f)

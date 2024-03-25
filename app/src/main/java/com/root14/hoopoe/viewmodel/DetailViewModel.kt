@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.root14.hoopoe.data.model.AssetById
 import com.root14.hoopoe.data.model.ChangeRate
 import com.root14.hoopoe.data.model.Interval
+import com.root14.hoopoe.data.model.IntervalData
 import com.root14.hoopoe.data.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -17,6 +18,33 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(private val mainRepository: MainRepository) :
     ViewModel() {
+
+
+    private var _interval = MutableLiveData<Interval>()
+    val interval: LiveData<Interval>
+        get() = _interval
+
+    fun getChartIntervalData(id: String, period: Int): LiveData<Interval> {
+        viewModelScope.launch(Dispatchers.IO) {
+            mainRepository.getAssetsHistoryById(id = id, interval = "d1").let { interval ->
+                withContext(Dispatchers.Default) {
+                    val result = calculateHistoryData(interval!!, period)
+                    withContext(Dispatchers.Main) {
+                        _interval.value = result
+                    }
+                }
+            }
+        }
+        return interval
+    }
+
+    private fun calculateHistoryData(interval: Interval, period: Int): Interval {
+        val data = interval.data
+        val result = ArrayList(data.subList((data.size - period), data.size))
+        return Interval(data = result)
+    }
+
+
     //TODO handle slow bandwidth loading state
     private val _assets = MutableLiveData<AssetById>()
     val assets: LiveData<AssetById>
@@ -45,8 +73,8 @@ class DetailViewModel @Inject constructor(private val mainRepository: MainReposi
             val dataDaily = mainRepository.getAssetsHistoryById(id = assetId, interval = "d1")
 
             val change7d = calculateChangePercentage(dataDaily!!, 7)
-            val change1m = calculateChangePercentage(dataDaily!!, 30)
-            val change1y = calculateChangePercentage(dataDaily!!, 364)
+            val change1m = calculateChangePercentage(dataDaily, 30)
+            val change1y = calculateChangePercentage(dataDaily, 364)
             val change1h = _assets.value?.data?.changePercent24Hr
 
             withContext(Dispatchers.Main) {
