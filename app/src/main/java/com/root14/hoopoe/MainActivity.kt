@@ -55,7 +55,6 @@ class MainActivity : AppCompatActivity() {
             binding.rwCoinMain.adapter?.notifyDataSetChanged()
         }
 
-
         //initial value
         mainViewModel.updateCoinList("100").observe(this) { assets ->
             assets.let {
@@ -68,6 +67,5 @@ class MainActivity : AppCompatActivity() {
                 initializer = true
             }
         }
-
     }
 }

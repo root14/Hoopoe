@@ -1,5 +1,6 @@
 package com.root14.hoopoe
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -30,24 +31,33 @@ class AssetDetailActivity : AppCompatActivity() {
         //TODO get id from mainScreen
         detailViewModel.getAssetList("bitcoin").observe(this) { assetById ->
             binding.asset = assetById
-            //setupChart(assetById)
+        }
+        detailViewModel.getIntervalData("bitcoin").observe(this) { changeRate ->
+            binding.changeRate = changeRate
+        }
 
-            detailViewModel.getIntervalData("bitcoin").observe(this) { changeRate ->
-                binding.changeRate = changeRate
-            }
+        detailViewModel.getChartIntervalData("bitcoin", 30).observe(this) { interval ->
+            setData(interval)
+        }
 
-            detailViewModel.getChartIntervalData("bitcoin", 30).observe(this) { interval ->
-                setData(interval)
-
-            }
+        binding.topAppBar.setNavigationOnClickListener {
+            startActivity(Intent(this, AssetDetailActivity::class.java))
         }
 
         //TODO make search icon work again -> show mainScreen search bottom sheet
-        //TODO add modes to chart like 1h,1d,1m
+        binding.topAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.favorite -> {
+                    //TODO save to Room
+                    true
+                }
 
+                else -> {
+                    true
+                }
+            }
 
-        val chart = binding.chartAsset
-
+        }
 
     }
 

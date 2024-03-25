@@ -2,13 +2,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/search"
-        android:contentDescription="search"
-        android:icon="@drawable/search_icon"
-        android:title="search"
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/favorite"
         android:contentDescription="favorite"
         android:icon="@drawable/sharp_favorite_24"
