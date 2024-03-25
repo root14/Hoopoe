@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="asset"
+            type="com.root14.hoopoe.data.model.AssetById" />
+
+        <variable
+            name="changeRate"
+            type="com.root14.hoopoe.data.model.ChangeRate" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".AssetDetailActivity">
+
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:liftOnScroll="true">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/topAppBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize"
+                app:menu="@menu/asset_detail_top_app_bar"
+                app:navigationIcon="@drawable/baseline_arrow_back_ios_new_24"
+                app:title="BTC"
+                app:titleCentered="true" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/chart_asset">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_1d"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1d" />
+
+                    <TextView
+                        android:id="@+id/tv_1d_change"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:setPriceChange='@{changeRate.change1d ?? ""}' />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_7d"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="7d" />
+
+                    <TextView
+                        android:id="@+id/tv_7d_change"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:setPriceChange='@{changeRate.change7d ?? ""}' />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_1m"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1m" />
+
+                    <TextView
+                        android:id="@+id/tv_1m_change"
+                        setPriceChange='@{changeRate.change1m??""}'
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_1y"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1y" />
+
+                    <TextView
+                        android:id="@+id/tv_1y_change"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:setPriceChange='@{changeRate.change1y?? ""}' />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_assetName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{asset.data.symbol}"
+                app:layout_constraintStart_toEndOf="@+id/imageView_asset"
+                app:layout_constraintTop_toTopOf="@+id/imageView_asset" />
+
+            <TextView
+                android:id="@+id/tv_assetPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="27sp"
+                app:layout_constraintStart_toStartOf="@+id/imageView_asset"
+                app:layout_constraintTop_toBottomOf="@+id/imageView_asset"
+                app:setCurrency='@{asset.data.priceUsd?? ""}' />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chart_asset"
+                android:layout_width="0dp"
+                android:layout_height="239dp"
+                android:layout_marginTop="48dp"
+                android:textSize="28sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_assetPrice" />
+
+            <ImageView
+                android:id="@+id/imageView_asset"
+                bindIcon='@{asset.data.symbol??""}'
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="128dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/twotone_android_24" />
+
+            <TextView
+                android:id="@+id/tv_maxSupply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:text="max supply"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+            <TextView
+                android:id="@+id/tv_maxSupply_price"
+                setMarketCap='@{asset.data.maxSupply??""}'
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@+id/tv_marketCap_price"
+                app:layout_constraintTop_toTopOf="@+id/tv_maxSupply" />
+
+            <TextView
+                android:id="@+id/tv_marketCap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="market cap"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_maxSupply" />
+
+            <TextView
+                android:id="@+id/tv_marketCap_price"
+                setMarketCap='@{asset.data.marketCapUsd??""}'
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@+id/tv_marketVolume_price"
+                app:layout_constraintTop_toTopOf="@+id/tv_marketCap" />
+
+            <TextView
+                android:id="@+id/tv_marketVolume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="market volume 24h"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_marketCap" />
+
+            <TextView
+                android:id="@+id/tv_marketVolume_price"
+                setMarketCap='@{asset.data.volumeUsd24Hr??""}'
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toEndOf="@+id/tv_marketVolume"
+                app:layout_constraintTop_toTopOf="@+id/tv_marketVolume" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Note: A RecyclerView can also be used -->
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

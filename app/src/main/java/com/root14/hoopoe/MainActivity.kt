@@ -1,5 +1,6 @@
 package com.root14.hoopoe
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +25,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val intent = Intent(this, AssetDetailActivity::class.java)
+        startActivity(intent)
+
+        //TODO on-loading process
         binding.progressIndicator.isIndeterminate = false
 
         val mainBottomSheet = MainBottomSheet()

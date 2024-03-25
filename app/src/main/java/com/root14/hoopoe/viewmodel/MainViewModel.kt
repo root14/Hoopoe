@@ -126,7 +126,6 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
                     }
                 }
             }
-
         }
         return Assets(data = resultArray)
     }
