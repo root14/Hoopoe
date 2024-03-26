@@ -4,9 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.root14.hoopoe.databinding.ActivityMainBinding
 import com.root14.hoopoe.view.adapter.CoinRecycleAdapter
+import com.root14.hoopoe.view.adapter.MainPagerAdapter
 import com.root14.hoopoe.view.bottomsheet.MainBottomSheet
 import com.root14.hoopoe.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     private var initializer: Boolean = false
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var adapter: MainPagerAdapter
 
     private val mainViewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,44 +28,44 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupViewPagerAdapter()
+        mainViewModel.bottomSheetInstance = MainBottomSheet()
+
         //TODO on-loading process
         binding.progressIndicator.isIndeterminate = false
 
-        val mainBottomSheet = MainBottomSheet()
-
         binding.btnTop100.setOnClickListener {
-            mainBottomSheet.show(supportFragmentManager, "")
+            mainViewModel.bottomSheetInstance.show(supportFragmentManager, "")
         }
         binding.btnSearch.setOnClickListener {
-            mainBottomSheet.show(supportFragmentManager, "")
+            mainViewModel.bottomSheetInstance.show(supportFragmentManager, "")
         }
         //sort price
         binding.twPriceSort.setOnClickListener {
             mainViewModel.sortPrice()
-            binding.rwCoinMain.adapter?.notifyDataSetChanged()
         }
         //sort 24h
         binding.tw24h.setOnClickListener {
             mainViewModel.sort24d()
-            binding.rwCoinMain.adapter?.notifyDataSetChanged()
         }
         //sort rank
         binding.twRank.setOnClickListener {
             mainViewModel.sortRank()
-            binding.rwCoinMain.adapter?.notifyDataSetChanged()
         }
 
-        //initial value
-        mainViewModel.updateCoinList("100").observe(this) { assets ->
-            assets.let {
-                binding.rwCoinMain.adapter = CoinRecycleAdapter(it)
-                binding.rwCoinMain.layoutManager = LinearLayoutManager(this)
-                binding.rwCoinMain.setHasFixedSize(true)
-                if (initializer) {
-                    mainBottomSheet.dismiss()
-                }
-                initializer = true
-            }
+        binding.btnWatchList.setOnClickListener {
+            binding.viewpager.currentItem = 1
         }
+        binding.btnCoins.setOnClickListener {
+            binding.viewpager.currentItem = 0
+        }
+    }
+
+    private fun setupViewPagerAdapter() {
+        val fragmentList = arrayListOf(PagerRvFragment(), PagerWatchListFragment())
+
+        val viewPager = binding.viewpager
+        adapter = MainPagerAdapter(supportFragmentManager, lifecycle, fragmentList)
+        viewPager.adapter = adapter
     }
 }

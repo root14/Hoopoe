@@ -9,6 +9,7 @@ import com.root14.hoopoe.data.model.Assets
 import com.root14.hoopoe.data.model.AssetsData
 import com.root14.hoopoe.data.model.SortTop
 import com.root14.hoopoe.data.repository.MainRepository
+import com.root14.hoopoe.view.bottomsheet.MainBottomSheet
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,6 +19,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(private val mainRepository: MainRepository) : ViewModel() {
+
+    lateinit var bottomSheetInstance: MainBottomSheet
+
+    private val _notifyChanged = MutableLiveData<Boolean>(false)
+    val notifyChanged: LiveData<Boolean>
+        get() = _notifyChanged
 
     //TODO handle slow bandwidth loading state
     private val _assets = MutableLiveData<Assets>()
@@ -50,6 +57,7 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
             }
             SortType.DESCENDING
         }
+        _notifyChanged.value = !_notifyChanged.value!!
     }
 
     private var sortType7d: SortType = SortType.NOT_SORTED
@@ -69,6 +77,7 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
             }
             SortType.DESCENDING
         }
+        _notifyChanged.value = !_notifyChanged.value!!
     }
 
     private var sortTypeRank: SortType = SortType.NOT_SORTED
@@ -84,6 +93,7 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
             }
             SortType.DESCENDING
         }
+        _notifyChanged.value = !_notifyChanged.value!!
     }
 
     private val _bottomSheetSortList = MutableLiveData<List<SortTop>>().apply {
