@@ -5,15 +5,20 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.root14.hoopoe.databinding.ActivityMainBinding
+import com.root14.hoopoe.utils.DataStoreUtil
 import com.root14.hoopoe.view.adapter.CoinRecycleAdapter
 import com.root14.hoopoe.view.adapter.MainPagerAdapter
 import com.root14.hoopoe.view.bottomsheet.MainBottomSheet
 import com.root14.hoopoe.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
