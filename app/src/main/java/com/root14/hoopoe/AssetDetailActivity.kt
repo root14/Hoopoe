@@ -18,7 +18,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class AssetDetailActivity : AppCompatActivity() {
+class AssetDetailActivity() :
+    AppCompatActivity() {
     private lateinit var binding: ActivityAssetDetailBinding
 
     private val detailViewModel: DetailViewModel by viewModels()
@@ -26,25 +27,27 @@ class AssetDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAssetDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //enableEdgeToEdge()
+
+        val bundle: Bundle? = intent.extras
+        val assetId: String? = bundle?.getString("assetId")
+        val assetName: String? = bundle?.getString("assetName")
 
         //TODO get id from mainScreen
-        detailViewModel.getAssetList("bitcoin").observe(this) { assetById ->
+        detailViewModel.getAssetList(assetName.toString()).observe(this) { assetById ->
             binding.asset = assetById
         }
-        detailViewModel.getIntervalData("bitcoin").observe(this) { changeRate ->
+        detailViewModel.getIntervalData(assetName.toString()).observe(this) { changeRate ->
             binding.changeRate = changeRate
         }
 
-        detailViewModel.getChartIntervalData("bitcoin", 30).observe(this) { interval ->
+        detailViewModel.getChartIntervalData(assetName.toString(), 30).observe(this) { interval ->
             setData(interval)
         }
 
         binding.topAppBar.setNavigationOnClickListener {
-            startActivity(Intent(this, AssetDetailActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
         }
 
-        //TODO make search icon work again -> show mainScreen search bottom sheet
         binding.topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.favorite -> {

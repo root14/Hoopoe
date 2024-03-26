@@ -70,20 +70,21 @@ class DetailViewModel @Inject constructor(private val mainRepository: MainReposi
     //1 week =7, 1 month=30, 1 year=364
     fun getIntervalData(assetId: String): LiveData<ChangeRate> {
         viewModelScope.launch(Dispatchers.IO) {
-            val dataDaily = mainRepository.getAssetsHistoryById(id = assetId, interval = "d1")
-
-            val change7d = calculateChangePercentage(dataDaily!!, 7)
-            val change1m = calculateChangePercentage(dataDaily, 30)
-            val change1y = calculateChangePercentage(dataDaily, 364)
-            val change1h = _assets.value?.data?.changePercent24Hr
-
-            withContext(Dispatchers.Main) {
-                _changeRate.value = ChangeRate(
-                    change1d = change1h.toString(),
-                    change7d = change7d.toString(),
-                    change1m = change1m.toString(),
-                    change1y = change1y.toString()
-                )
+            mainRepository.getAssetsHistoryById(id = assetId, interval = "d1").let { dataDaily ->
+                withContext(Dispatchers.Default) {
+                    val change7d = calculateChangePercentage(dataDaily!!, 7)
+                    val change1m = calculateChangePercentage(dataDaily, 30)
+                    val change1y = calculateChangePercentage(dataDaily, 364)
+                    val change1h = _assets.value?.data?.changePercent24Hr
+                    withContext(Dispatchers.Main) {
+                        _changeRate.value = ChangeRate(
+                            change1d = change1h.toString(),
+                            change7d = change7d.toString(),
+                            change1m = change1m.toString(),
+                            change1y = change1y.toString()
+                        )
+                    }
+                }
             }
         }
         return changeRate
