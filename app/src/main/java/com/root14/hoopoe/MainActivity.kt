@@ -6,6 +6,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.root14.hoopoe.databinding.ActivityMainBinding
 import com.root14.hoopoe.view.adapter.CoinRecycleAdapter
 import com.root14.hoopoe.view.adapter.MainPagerAdapter
@@ -59,6 +61,21 @@ class MainActivity : AppCompatActivity() {
         binding.btnCoins.setOnClickListener {
             binding.viewpager.currentItem = 0
         }
+
+        binding.viewpager.registerOnPageChangeCallback(object : OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                when (position) {
+                    0 -> {
+                        binding.toggleButton.check(R.id.btn_coins)
+                    }
+
+                    1 -> {
+                        binding.toggleButton.check(R.id.btn_watchList)
+                    }
+                }
+            }
+        })
     }
 
     private fun setupViewPagerAdapter() {
