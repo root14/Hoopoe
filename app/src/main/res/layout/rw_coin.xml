@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="assets"
+            type="com.root14.hoopoe.data.model.AssetsData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView_coinImage"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="8dp"
+            app:bindIcon="@{assets.symbol}"
+            app:layout_constraintBottom_toBottomOf="@+id/tw_rank"
+            app:layout_constraintStart_toEndOf="@+id/tw_rank"
+            app:layout_constraintTop_toTopOf="@+id/tw_rank"
+            app:srcCompat="@drawable/twotone_android_24" />
+
+        <TextView
+            android:id="@+id/tw_coinName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{assets.name}"
+            app:layout_constraintStart_toEndOf="@+id/imageView_coinImage"
+            app:layout_constraintTop_toTopOf="@+id/imageView_coinImage" />
+
+        <TextView
+            android:id="@+id/tw_CurrentPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/tw_priceChange"
+            app:layout_constraintTop_toTopOf="@+id/imageView_coinImage"
+            app:setCurrency='@{assets.priceUsd??""}' />
+
+        <TextView
+            android:id="@+id/tw_priceChange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:setPriceChange='@{assets.changePercent24Hr ?? ""}' />
+
+        <TextView
+            android:id="@+id/tw_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@{assets.rank}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tw_marketVolume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="7sp"
+            app:layout_constraintStart_toStartOf="@+id/tw_coinName"
+            app:layout_constraintTop_toBottomOf="@+id/tw_coinName"
+            app:setMarketCap='@{assets.volumeUsd24Hr?? ""}' />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
