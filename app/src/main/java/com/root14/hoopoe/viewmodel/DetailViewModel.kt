@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.root14.hoopoe.data.model.AssetById
+import com.root14.hoopoe.data.model.AssetsData
 import com.root14.hoopoe.data.model.ChangeRate
 import com.root14.hoopoe.data.model.Interval
-import com.root14.hoopoe.data.model.IntervalData
 import com.root14.hoopoe.data.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -50,7 +50,7 @@ class DetailViewModel @Inject constructor(private val mainRepository: MainReposi
     val assets: LiveData<AssetById>
         get() = _assets
 
-    fun getAssetList(id: String): LiveData<AssetById> {
+    fun getAssetById(id: String): LiveData<AssetById> {
         viewModelScope.launch(Dispatchers.IO) {
             mainRepository.getAssetsById(id).let {
                 withContext(Dispatchers.Main) {
@@ -59,6 +59,26 @@ class DetailViewModel @Inject constructor(private val mainRepository: MainReposi
             }
         }
         return _assets
+    }
+
+    private val _assetsList = MutableLiveData<ArrayList<AssetsData>>()
+    val assetsList: LiveData<ArrayList<AssetsData>>
+        get() = _assetsList
+
+    fun getAssetById(vararg ids: String): LiveData<ArrayList<AssetsData>> {
+        viewModelScope.launch(Dispatchers.IO) {
+            val dataList = arrayListOf<AssetsData>()
+            ids.forEach { id ->
+                mainRepository.getAssetsById(id).let { assetById ->
+                    assetById?.data?.let {
+                        dataList.add(it)
+                    }
+                }
+            }
+            _assetsList.postValue(dataList)
+        }
+
+        return assetsList
     }
 
     private val _changeRate = MutableLiveData<ChangeRate>()

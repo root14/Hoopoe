@@ -2,6 +2,7 @@
 activityKtx = "1.8.2"
 agp = "8.3.0"
 converterGson = "2.9.0"
+datastorePreferences = "1.0.0"
 fragmentKtx = "1.6.2"
 glide = "4.16.0"
 gson = "2.10.1"
@@ -22,6 +23,7 @@ retrofit2KotlinCoroutinesAdapter = "0.9.2"
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentKtx" }
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
 androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationFragmentKtx" }

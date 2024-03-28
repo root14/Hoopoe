@@ -61,7 +61,12 @@ dependencies {
     implementation libs.glide
     implementation libs.androidx.fragment.ktx
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation(libs.androidx.datastore.preferences)
+
+    def room_version = "2.6.1"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 }
 
 kapt {

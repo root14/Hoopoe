@@ -11,18 +11,20 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IFillFormatter
+import com.root14.hoopoe.data.entity.Favorite
 import com.root14.hoopoe.data.model.Interval
 import com.root14.hoopoe.databinding.ActivityAssetDetailBinding
 import com.root14.hoopoe.viewmodel.DetailViewModel
+import com.root14.hoopoe.viewmodel.FavoritesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class AssetDetailActivity() :
-    AppCompatActivity() {
+class AssetDetailActivity() : AppCompatActivity() {
     private lateinit var binding: ActivityAssetDetailBinding
 
     private val detailViewModel: DetailViewModel by viewModels()
+    private val favoritesViewModel: FavoritesViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAssetDetailBinding.inflate(layoutInflater)
@@ -32,8 +34,18 @@ class AssetDetailActivity() :
         val assetId: String? = bundle?.getString("assetId")
         val assetName: String? = bundle?.getString("assetName")
 
+
+        favoritesViewModel.getAllFavorites().observe(this) { it ->
+            val isFav = it.filter { it.assetName == assetName }.size == 1
+            if (isFav) {
+                val buttonFav = binding.topAppBar.menu.findItem(R.id.favorite)
+                buttonFav.setIcon(R.drawable.baseline_favorite_24_filled)
+            }
+        }
+
+
         //TODO get id from mainScreen
-        detailViewModel.getAssetList(assetName.toString()).observe(this) { assetById ->
+        detailViewModel.getAssetById(assetName.toString()).observe(this) { assetById ->
             binding.asset = assetById
         }
         detailViewModel.getIntervalData(assetName.toString()).observe(this) { changeRate ->
@@ -51,7 +63,17 @@ class AssetDetailActivity() :
         binding.topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.favorite -> {
-                    //TODO save to Room
+                    favoritesViewModel.getAllFavorites().observe(this) {
+                        if (it.contains(Favorite(assetName = assetName.toString()))) {
+                            favoritesViewModel.deleteFavorite(Favorite(assetName = assetName.toString()))
+                            val buttonFav = binding.topAppBar.menu.findItem(R.id.favorite)
+                            buttonFav.setIcon(R.drawable.sharp_favorite_24)
+                        } else {
+                            favoritesViewModel.addFavorite(Favorite(assetName = assetName.toString()))
+                            val buttonFav = binding.topAppBar.menu.findItem(R.id.favorite)
+                            buttonFav.setIcon(R.drawable.baseline_favorite_24_filled)
+                        }
+                    }
                     true
                 }
 

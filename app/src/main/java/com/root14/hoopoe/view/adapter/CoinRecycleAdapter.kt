@@ -37,7 +37,6 @@ class CoinRecycleAdapter(private val assets: Assets) :
 
             holder.itemView.context.startActivity(intent)
         }
-
     }
 
     override fun getItemCount(): Int {

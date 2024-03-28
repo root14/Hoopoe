@@ -9,14 +9,20 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.map
 
 // At the top level of your kotlin file:
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "HoopoeFavorites")
 
 class DataStoreUtil(private var context: Context) {
-    fun readData(key: String) =
-        context.dataStore.data.map { preferences ->
-            preferences[stringPreferencesKey(key)]
+    fun readData(key: String) = context.dataStore.data.map { preferences ->
+        preferences[stringPreferencesKey(key)]
+    }
+
+    suspend fun writeData(key: String, value: String, clearDataStore: Boolean = false) =
+        context.dataStore.edit { settings ->
+            if (clearDataStore) {
+                settings.clear()
+            }
+            settings[stringPreferencesKey(key)] = value
         }
 
-    suspend fun writeData(key: String, value: String) =
-        context.dataStore.edit { settings -> settings[stringPreferencesKey(key)] = value }
+
 }

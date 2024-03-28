@@ -2,6 +2,7 @@ package com.root14.hoopoe
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -73,10 +74,12 @@ class MainActivity : AppCompatActivity() {
                 when (position) {
                     0 -> {
                         binding.toggleButton.check(R.id.btn_coins)
+                        hideSortElements(false)
                     }
 
                     1 -> {
                         binding.toggleButton.check(R.id.btn_watchList)
+                        hideSortElements(true)
                     }
                 }
             }
@@ -89,5 +92,21 @@ class MainActivity : AppCompatActivity() {
         val viewPager = binding.viewpager
         adapter = MainPagerAdapter(supportFragmentManager, lifecycle, fragmentList)
         viewPager.adapter = adapter
+    }
+
+    private fun hideSortElements(hide: Boolean) {
+        if (hide) {
+            binding.twRank.visibility = View.INVISIBLE
+            binding.twPriceSort.visibility = View.INVISIBLE
+            binding.tw24h.visibility = View.INVISIBLE
+            binding.twMarketVolume.visibility = View.INVISIBLE
+        } else {
+            binding.twRank.visibility = View.VISIBLE
+            binding.twPriceSort.visibility = View.VISIBLE
+            binding.tw24h.visibility = View.VISIBLE
+            binding.twMarketVolume.visibility = View.VISIBLE
+        }
+
+
     }
 }

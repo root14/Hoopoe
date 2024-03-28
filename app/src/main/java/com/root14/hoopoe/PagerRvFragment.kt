@@ -20,9 +20,6 @@ class PagerRvFragment : Fragment() {
 
     private val mainViewModel: MainViewModel by activityViewModels()
     private var initializer: Boolean = false
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
