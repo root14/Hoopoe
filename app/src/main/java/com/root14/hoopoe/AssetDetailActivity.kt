@@ -43,8 +43,6 @@ class AssetDetailActivity() : AppCompatActivity() {
             }
         }
 
-
-        //TODO get id from mainScreen
         detailViewModel.getAssetById(assetName.toString()).observe(this) { assetById ->
             binding.asset = assetById
         }
