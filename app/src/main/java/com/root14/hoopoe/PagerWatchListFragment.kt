@@ -23,7 +23,7 @@ class PagerWatchListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentPagerWatchListBinding.inflate(layoutInflater)
-        
+
         return binding.root
     }
 

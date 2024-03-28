@@ -64,8 +64,9 @@ class AssetDetailActivity() : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.favorite -> {
                     favoritesViewModel.getAllFavorites().observe(this) {
-                        if (it.contains(Favorite(assetName = assetName.toString()))) {
-                            favoritesViewModel.deleteFavorite(Favorite(assetName = assetName.toString()))
+                        val isFav = it.filter { it.assetName == assetName }.size == 1
+                        if (isFav) {
+                            favoritesViewModel.deleteFavorite(assetName.toString())
                             val buttonFav = binding.topAppBar.menu.findItem(R.id.favorite)
                             buttonFav.setIcon(R.drawable.sharp_favorite_24)
                         } else {

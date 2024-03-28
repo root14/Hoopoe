@@ -12,8 +12,8 @@ interface FavoriteDao {
     @Query("SELECT * FROM favorites")
     fun getAllFavorite(): List<Favorite>
 
-    @Delete
-    fun deleteFavorite(favorite: Favorite)
+    @Query("DELETE FROM favorites WHERE assetName = :assetName")
+    fun deleteFavorite(assetName: String)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFavorite(vararg favorite: Favorite)

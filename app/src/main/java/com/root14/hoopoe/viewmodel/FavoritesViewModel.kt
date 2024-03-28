@@ -31,9 +31,9 @@ class FavoritesViewModel @Inject constructor(private val favoriteDao: FavoriteDa
         viewModelScope.launch(Dispatchers.IO) { favoriteDao.insertFavorite(favorite) }
     }
 
-    fun deleteFavorite(favorite: Favorite) {
+    fun deleteFavorite(assetName: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            favoriteDao.deleteFavorite(favorite)
+            favoriteDao.deleteFavorite(assetName)
         }
     }
 
