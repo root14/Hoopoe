@@ -145,6 +145,7 @@
                 android:id="@+id/tv_assetName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:text="@{asset.data.symbol}"
                 app:layout_constraintStart_toEndOf="@+id/imageView_asset"
                 app:layout_constraintTop_toTopOf="@+id/imageView_asset" />
@@ -161,8 +162,8 @@
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/chart_asset"
                 android:layout_width="0dp"
-                android:layout_height="239dp"
-                android:layout_marginTop="48dp"
+                android:layout_height="250dp"
+                android:layout_marginTop="24dp"
                 android:textSize="28sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -173,7 +174,7 @@
                 bindIcon='@{asset.data.symbol??""}'
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="128dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -231,6 +232,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 app:layout_constraintStart_toEndOf="@+id/tv_marketVolume"
                 app:layout_constraintTop_toTopOf="@+id/tv_marketVolume" />
 
