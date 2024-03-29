@@ -16,7 +16,6 @@ import com.root14.hoopoe.viewmodel.MainViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-//manual injection caused by @AndroidEntryPoint not working with BottomSheetDialogFragment
 class MainBottomSheet() : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentMainBottomSheetBinding
 

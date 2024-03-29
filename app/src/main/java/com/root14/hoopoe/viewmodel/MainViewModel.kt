@@ -102,7 +102,7 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
                 SortTop("Top 100", true, "100"),
                 SortTop("Top 200", false, "200"),
                 SortTop("Top 500", false, "500"),
-                SortTop("All Coins", false, "2000")
+                //cause recycler-view coroutine exception SortTop("All Coins", false, "2000")
             )
         )
     }

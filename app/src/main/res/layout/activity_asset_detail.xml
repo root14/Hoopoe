@@ -73,6 +73,7 @@
                         android:id="@+id/tv_1d"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/alibaba_sans_regular"
                         android:text="1d" />
 
                     <TextView
@@ -92,12 +93,14 @@
                         android:id="@+id/tv_7d"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/alibaba_sans_regular"
                         android:text="7d" />
 
                     <TextView
                         android:id="@+id/tv_7d_change"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/alibaba_sans_regular"
                         app:setPriceChange='@{changeRate.change7d ?? ""}' />
                 </LinearLayout>
 
@@ -111,13 +114,15 @@
                         android:id="@+id/tv_1m"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/alibaba_sans_regular"
                         android:text="1m" />
 
                     <TextView
                         android:id="@+id/tv_1m_change"
                         setPriceChange='@{changeRate.change1m??""}'
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/alibaba_sans_regular" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -130,12 +135,14 @@
                         android:id="@+id/tv_1y"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/alibaba_sans_regular"
                         android:text="1y" />
 
                     <TextView
                         android:id="@+id/tv_1y_change"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/alibaba_sans_regular"
                         app:setPriceChange='@{changeRate.change1y?? ""}' />
                 </LinearLayout>
 
@@ -146,7 +153,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:fontFamily="@font/alibaba_sans"
                 android:text="@{asset.data.symbol}"
+                android:textSize="18sp"
                 app:layout_constraintStart_toEndOf="@+id/imageView_asset"
                 app:layout_constraintTop_toTopOf="@+id/imageView_asset" />
 
@@ -154,7 +163,8 @@
                 android:id="@+id/tv_assetPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="27sp"
+                android:fontFamily="@font/alibaba_sans_regular"
+                android:textSize="28sp"
                 app:layout_constraintStart_toStartOf="@+id/imageView_asset"
                 app:layout_constraintTop_toBottomOf="@+id/imageView_asset"
                 app:setCurrency='@{asset.data.priceUsd?? ""}' />
@@ -177,8 +187,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="128dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/twotone_android_24" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_maxSupply"
@@ -186,7 +195,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="32dp"
-                android:text="max supply"
+                android:fontFamily="@font/alibaba_sans_regular"
+                android:text="Max Supply"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
@@ -195,7 +205,9 @@
                 setMarketCap='@{asset.data.maxSupply??""}'
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@+id/tv_marketCap_price"
+                android:layout_marginStart="164dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_maxSupply"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_maxSupply" />
 
             <TextView
@@ -204,7 +216,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
-                android:text="market cap"
+                android:fontFamily="@font/alibaba_sans_regular"
+                android:text="Market Capacity"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_maxSupply" />
 
@@ -213,7 +226,9 @@
                 setMarketCap='@{asset.data.marketCapUsd??""}'
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@+id/tv_marketVolume_price"
+                android:layout_marginStart="164dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_marketCap"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_marketCap" />
 
             <TextView
@@ -222,7 +237,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
-                android:text="market volume 24h"
+                android:fontFamily="@font/alibaba_sans_regular"
+                android:text="24H Market Valume"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_marketCap" />
 
@@ -231,9 +247,9 @@
                 setMarketCap='@{asset.data.volumeUsd24Hr??""}'
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="164dp"
                 android:layout_marginTop="8dp"
-                app:layout_constraintStart_toEndOf="@+id/tv_marketVolume"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_marketVolume" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
