@@ -5,18 +5,30 @@ import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IFillFormatter
+import com.root14.hoopoe.data.WebSocketHelper
 import com.root14.hoopoe.data.entity.Favorite
 import com.root14.hoopoe.data.model.Interval
 import com.root14.hoopoe.databinding.ActivityAssetDetailBinding
 import com.root14.hoopoe.viewmodel.DetailViewModel
 import com.root14.hoopoe.viewmodel.FavoritesViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.websocket.WebSockets
+import io.ktor.client.plugins.websocket.webSocket
+import io.ktor.http.HttpMethod
+import io.ktor.websocket.Frame
+import io.ktor.websocket.readText
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -45,6 +57,7 @@ class AssetDetailActivity() : AppCompatActivity() {
         detailViewModel.getAssetById(assetName.toString()).observe(this) { assetById ->
             binding.asset = assetById
         }
+
         detailViewModel.getIntervalData(assetName.toString()).observe(this) { changeRate ->
             binding.changeRate = changeRate
         }
@@ -81,6 +94,16 @@ class AssetDetailActivity() : AppCompatActivity() {
             }
         }
 
+        lifecycleScope.launch {
+            WebSocketHelper().subscribeWebSocket(
+                asset = assetName.toString(),
+                listener = object : WebSocketHelper.IWebSocketListener {
+                    override fun observeSocket(data: String) {
+                        binding.livePrice = data
+                    }
+
+                })
+        }
     }
 
     private fun setData(interval: Interval) {

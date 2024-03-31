@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.root14.hoopoe.data.WebSocketHelper
 import com.root14.hoopoe.data.model.AssetById
 import com.root14.hoopoe.data.model.AssetsData
 import com.root14.hoopoe.data.model.ChangeRate
