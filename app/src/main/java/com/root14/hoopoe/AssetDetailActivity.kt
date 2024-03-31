@@ -34,7 +34,6 @@ class AssetDetailActivity() : AppCompatActivity() {
         val assetId: String? = bundle?.getString("assetId")
         val assetName: String? = bundle?.getString("assetName")
 
-
         favoritesViewModel.getAllFavorites().observe(this) { it ->
             val isFav = it.filter { it.assetName == assetName }.size == 1
             if (isFav) {
@@ -80,7 +79,6 @@ class AssetDetailActivity() : AppCompatActivity() {
                     true
                 }
             }
-
         }
 
     }
@@ -113,7 +111,7 @@ class AssetDetailActivity() : AppCompatActivity() {
         chart.axisRight.isEnabled = true
         chart.legend.isEnabled = false
 
-        chart.animateXY(2000, 2000)
+        chart.animateXY(1000, 1000)
 
         chart.invalidate()
 

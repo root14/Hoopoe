@@ -18,18 +18,18 @@
             android:id="@+id/imageView_coinImage"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="40dp"
             app:bindIcon="@{assets.symbol}"
             app:layout_constraintBottom_toBottomOf="@+id/tw_rank"
-            app:layout_constraintStart_toEndOf="@+id/tw_rank"
-            app:layout_constraintTop_toTopOf="@+id/tw_rank"
-            app:srcCompat="@drawable/twotone_android_24" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tw_rank" />
 
         <TextView
             android:id="@+id/tw_coinName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:fontFamily="@font/alibaba_sans_regular"
             android:text="@{assets.name}"
             app:layout_constraintStart_toEndOf="@+id/imageView_coinImage"
             app:layout_constraintTop_toTopOf="@+id/imageView_coinImage" />
@@ -39,8 +39,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
+            android:fontFamily="@font/alibaba_sans_regular"
             app:layout_constraintEnd_toStartOf="@+id/tw_priceChange"
-            app:layout_constraintTop_toTopOf="@+id/imageView_coinImage"
+            app:layout_constraintTop_toTopOf="@+id/tw_priceChange"
             app:setCurrency='@{assets.priceUsd??""}' />
 
         <TextView
@@ -49,6 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:fontFamily="@font/alibaba_sans_regular"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:setPriceChange='@{assets.changePercent24Hr ?? ""}' />
@@ -60,6 +62,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+            android:fontFamily="@font/alibaba_sans_regular"
             android:text="@{assets.rank}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -69,6 +72,7 @@
             android:id="@+id/tw_marketVolume"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/alibaba_sans_regular"
             android:textSize="7sp"
             app:layout_constraintStart_toStartOf="@+id/tw_coinName"
             app:layout_constraintTop_toBottomOf="@+id/tw_coinName"

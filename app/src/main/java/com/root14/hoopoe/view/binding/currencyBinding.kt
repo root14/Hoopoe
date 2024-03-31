@@ -1,7 +1,10 @@
 package com.root14.hoopoe.view.binding
 
+import android.graphics.Color
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import com.root14.hoopoe.R
 import com.root14.hoopoe.utils.convertMarketCap
 import com.root14.hoopoe.utils.convertPriceChange
 import com.root14.hoopoe.utils.convertPriceFormat
@@ -24,5 +27,15 @@ fun setMarketCap(textView: TextView, marketCap: String) {
 fun setPriceChange(textView: TextView, priceChange: String) {
     priceChange.let {
         textView.text = priceChange.convertPriceChange()
+
+        val baseView = textView.rootView.resources
+        if (priceChange.isNotEmpty()) {
+            val price = priceChange.toDouble()
+            if (price > 0) {
+                textView.setTextColor(baseView.getColor(R.color.positiveColor))
+            } else {
+                textView.setTextColor(baseView.getColor(R.color.negativeColor))
+            }
+        }
     }
 }

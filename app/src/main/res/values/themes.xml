@@ -4,8 +4,24 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="colorPrimary">@color/black</item>
-
     </style>
 
     <style name="Theme.Hoopoe" parent="Base.Theme.Hoopoe" />
+
+
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <!-- Set the splash screen background, animated icon, and animation duration. -->
+
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <!-- Use windowSplashScreenAnimatedIcon to add either a drawable or an
+             animated drawable. One of these is required. -->
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/splash_screen</item>
+        <!-- Required for animated icons -->
+        <item name="windowSplashScreenAnimationDuration">200</item>
+
+        <!-- Set the theme of the Activity that directly follows your splash screen. -->
+        <!-- Required -->
+        <item name="postSplashScreenTheme">@style/Theme.Hoopoe</item>
+        <item name="android:layout_scale">@android:integer/config_longAnimTime</item>
+    </style>
 </resources>
