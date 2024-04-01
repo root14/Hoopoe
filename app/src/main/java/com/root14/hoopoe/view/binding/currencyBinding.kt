@@ -29,7 +29,7 @@ fun setPriceChange(textView: TextView, priceChange: String) {
         textView.text = priceChange.convertPriceChange()
 
         val baseView = textView.rootView.resources
-        if (priceChange.isNotEmpty()) {
+        if (priceChange.isNotEmpty() and (priceChange != "null") and priceChange.isNotBlank()) {
             val price = priceChange.toDouble()
             if (price > 0) {
                 textView.setTextColor(baseView.getColor(R.color.positiveColor))

@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.gson.JsonParser
+import com.root14.hoopoe.data.WebSocketHelper
 import com.root14.hoopoe.data.model.AssetById
 import com.root14.hoopoe.data.model.AssetsData
 import com.root14.hoopoe.data.model.ChangeRate
@@ -18,8 +20,6 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(private val mainRepository: MainRepository) :
     ViewModel() {
-
-
     private var _interval = MutableLiveData<Interval>()
     val interval: LiveData<Interval>
         get() = _interval
@@ -92,13 +92,23 @@ class DetailViewModel @Inject constructor(private val mainRepository: MainReposi
         viewModelScope.launch(Dispatchers.IO) {
             mainRepository.getAssetsHistoryById(id = assetId, interval = "d1").let { dataDaily ->
                 withContext(Dispatchers.Default) {
+                    var change1h = ""
                     val change7d = calculateChangePercentage(dataDaily!!, 7)
                     val change1m = calculateChangePercentage(dataDaily, 30)
                     val change1y = calculateChangePercentage(dataDaily, 364)
-                    val change1h = _assets.value?.data?.changePercent24Hr
+
+                    //some times api return null, it causes pretend ui poor
+                    assets.value?.data?.changePercent24Hr.let {
+                        if (it == null) {
+                            change1h = "0.0"
+                        } else {
+                            change1h = it.toString()
+                        }
+                    }
+
                     withContext(Dispatchers.Main) {
                         _changeRate.value = ChangeRate(
-                            change1d = change1h.toString(),
+                            change1d = change1h,
                             change7d = change7d.toString(),
                             change1m = change1m.toString(),
                             change1y = change1y.toString()
@@ -108,6 +118,18 @@ class DetailViewModel @Inject constructor(private val mainRepository: MainReposi
             }
         }
         return changeRate
+    }
+
+    private val _livePrice = MutableLiveData<String>()
+    val livePrice: LiveData<String>
+        get() = _livePrice
+
+    fun postLivePrice(data: String, assetName: String): LiveData<String> {
+        viewModelScope.launch(Dispatchers.Main) {
+            val jsonObject = JsonParser.parseString(data).asJsonObject.get(assetName).asString
+            _livePrice.postValue(jsonObject)
+        }
+        return livePrice
     }
 
     private fun calculateChangePercentage(interval: Interval, period: Int): Double {

@@ -12,6 +12,10 @@
         <variable
             name="changeRate"
             type="com.root14.hoopoe.data.model.ChangeRate" />
+
+        <variable
+            name="livePrice"
+            type="String" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -161,6 +165,7 @@
 
             <TextView
                 android:id="@+id/tv_assetPrice"
+                app:setLivePrice='@{livePrice?? ""}'
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/alibaba_sans_regular"
