@@ -24,6 +24,7 @@ class WebSocketHelper {
     }
 
     //default listen bitcoin
+    //no need to unsubscribe
     suspend fun subscribeWebSocket(
         listener: IWebSocketListener,
         host: String = "ws.coincap.io",
@@ -35,7 +36,6 @@ class WebSocketHelper {
         ) {
             while (true) {
                 val othersMessage = incoming.receive() as? Frame.Text ?: continue
-                //println(othersMessage.readText())
                 listener.observeSocket(othersMessage.readText())
             }
         }

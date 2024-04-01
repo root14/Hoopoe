@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.gson.JsonParser
 import com.root14.hoopoe.data.WebSocketHelper
 import com.root14.hoopoe.data.model.AssetById
 import com.root14.hoopoe.data.model.AssetsData
@@ -109,6 +110,18 @@ class DetailViewModel @Inject constructor(private val mainRepository: MainReposi
             }
         }
         return changeRate
+    }
+
+    private val _livePrice = MutableLiveData<String>()
+    val livePrice: LiveData<String>
+        get() = _livePrice
+
+    fun postLivePrice(data: String, assetName: String): LiveData<String> {
+        viewModelScope.launch(Dispatchers.Main) {
+            val jsonObject = JsonParser.parseString(data).asJsonObject.get(assetName).asString
+            _livePrice.postValue(jsonObject)
+        }
+        return livePrice
     }
 
     private fun calculateChangePercentage(interval: Interval, period: Int): Double {
