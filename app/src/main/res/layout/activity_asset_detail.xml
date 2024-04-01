@@ -10,8 +10,8 @@
             type="com.root14.hoopoe.data.model.AssetById" />
 
         <variable
-            name="changeRate"
-            type="com.root14.hoopoe.data.model.ChangeRate" />
+            name="priceChange"
+            type="String" />
 
         <variable
             name="livePrice"
@@ -47,110 +47,59 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
-                android:id="@+id/linearLayout"
+
+            <TextView
+                android:id="@+id/tv_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/alibaba_sans_regular"
+                android:text="(historical data has a 1 day delay so can be misleading when there are rapid increases)"
+                android:textSize="9sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggleButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:weightSum="5"
+                app:checkedButton="@+id/btn_coins"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/chart_asset">
+                app:layout_constraintTop_toBottomOf="@+id/chart_asset"
+                app:singleSelection="true">
 
-                <LinearLayout
+                <Button
+                    android:id="@+id/btn_1d"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical" />
+                    android:text="1d" />
 
-                <LinearLayout
+                <Button
+                    android:id="@+id/btn_7d"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:text="7d" />
 
-                    <TextView
-                        android:id="@+id/tv_1d"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/alibaba_sans_regular"
-                        android:text="1d" />
-
-                    <TextView
-                        android:id="@+id/tv_1d_change"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:setPriceChange='@{changeRate.change1d ?? ""}' />
-                </LinearLayout>
-
-                <LinearLayout
+                <Button
+                    android:id="@+id/btn_1m"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:text="1m" />
 
-                    <TextView
-                        android:id="@+id/tv_7d"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/alibaba_sans_regular"
-                        android:text="7d" />
-
-                    <TextView
-                        android:id="@+id/tv_7d_change"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/alibaba_sans_regular"
-                        app:setPriceChange='@{changeRate.change7d ?? ""}' />
-                </LinearLayout>
-
-                <LinearLayout
+                <Button
+                    android:id="@+id/btn_1y"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_1m"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/alibaba_sans_regular"
-                        android:text="1m" />
-
-                    <TextView
-                        android:id="@+id/tv_1m_change"
-                        setPriceChange='@{changeRate.change1m??""}'
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/alibaba_sans_regular" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_1y"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/alibaba_sans_regular"
-                        android:text="1y" />
-
-                    <TextView
-                        android:id="@+id/tv_1y_change"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/alibaba_sans_regular"
-                        app:setPriceChange='@{changeRate.change1y?? ""}' />
-                </LinearLayout>
-
-            </LinearLayout>
+                    android:text="1y" />
+            </com.google.android.material.button.MaterialButtonToggleGroup>
 
             <TextView
                 android:id="@+id/tv_assetName"
@@ -165,14 +114,14 @@
 
             <TextView
                 android:id="@+id/tv_assetPrice"
-                app:setLivePrice='@{livePrice?? ""}'
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/alibaba_sans_regular"
                 android:textSize="28sp"
                 app:layout_constraintStart_toStartOf="@+id/imageView_asset"
                 app:layout_constraintTop_toBottomOf="@+id/imageView_asset"
-                app:setCurrency='@{asset.data.priceUsd?? ""}' />
+                app:setCurrency='@{asset.data.priceUsd?? ""}'
+                app:setLivePrice='@{livePrice?? ""}' />
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/chart_asset"
@@ -203,7 +152,7 @@
                 android:fontFamily="@font/alibaba_sans_regular"
                 android:text="Max Supply"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/toggleButton" />
 
             <TextView
                 android:id="@+id/tv_maxSupply_price"
@@ -256,6 +205,17 @@
                 android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_marketVolume" />
+
+            <TextView
+                android:id="@+id/tv_changeRate"
+                setPriceChange='@{priceChange?? ""}'
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:fontFamily="@font/alibaba_sans_regular"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imageView_asset" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

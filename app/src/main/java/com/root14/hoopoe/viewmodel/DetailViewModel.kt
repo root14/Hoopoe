@@ -25,10 +25,14 @@ class DetailViewModel @Inject constructor(private val mainRepository: MainReposi
         get() = _interval
 
     fun getChartIntervalData(id: String, period: Int): LiveData<Interval> {
+
+        val chooser: String = if (period < 7) "d1" else "h1"
+        val historyPeriod = if (period < 7) 24 else period
+
         viewModelScope.launch(Dispatchers.IO) {
-            mainRepository.getAssetsHistoryById(id = id, interval = "d1").let { interval ->
+            mainRepository.getAssetsHistoryById(id = id, interval = chooser).let { interval ->
                 withContext(Dispatchers.Default) {
-                    val result = calculateHistoryData(interval!!, period)
+                    val result = calculateHistoryData(interval!!, historyPeriod)
                     withContext(Dispatchers.Main) {
                         _interval.value = result
                     }

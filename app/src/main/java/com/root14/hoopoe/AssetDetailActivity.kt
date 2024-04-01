@@ -14,6 +14,7 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IFillFormatter
 import com.root14.hoopoe.data.WebSocketHelper
 import com.root14.hoopoe.data.entity.Favorite
+import com.root14.hoopoe.data.model.ChangeRate
 import com.root14.hoopoe.data.model.Interval
 import com.root14.hoopoe.databinding.ActivityAssetDetailBinding
 import com.root14.hoopoe.viewmodel.DetailViewModel
@@ -28,6 +29,8 @@ class AssetDetailActivity() : AppCompatActivity() {
 
     private val detailViewModel: DetailViewModel by viewModels()
     private val favoritesViewModel: FavoritesViewModel by viewModels()
+
+    private var changeRate = ChangeRate()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAssetDetailBinding.inflate(layoutInflater)
@@ -49,16 +52,44 @@ class AssetDetailActivity() : AppCompatActivity() {
             binding.asset = assetById
         }
 
-        detailViewModel.getIntervalData(assetName.toString()).observe(this) { changeRate ->
-            binding.changeRate = changeRate
+        //calculate change rate
+        detailViewModel.getIntervalData(assetName.toString()).observe(this) {
+            changeRate = it
+            //default loading value
+            binding.btn1m.performClick()
         }
 
-        detailViewModel.getChartIntervalData(assetName.toString(), 30).observe(this) { interval ->
+        binding.btn1d.setOnClickListener {
+            detailViewModel.getChartIntervalData(assetName.toString(), 1)
+            binding.priceChange = changeRate.change1d
+
+        }
+        binding.btn7d.setOnClickListener {
+            detailViewModel.getChartIntervalData(assetName.toString(), 7)
+            binding.priceChange = changeRate.change7d
+        }
+
+        binding.btn1m.setOnClickListener {
+            binding.priceChange = changeRate.change1m
+            detailViewModel.getChartIntervalData(assetName.toString(), 30)
+        }
+
+        binding.btn1y.setOnClickListener {
+            detailViewModel.getChartIntervalData(assetName.toString(), 364)
+            binding.priceChange = changeRate.change1y
+        }
+
+        //observe selected data interval data
+        detailViewModel.interval.observe(this) { interval ->
             setData(interval)
         }
 
-        binding.topAppBar.setNavigationOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
+        binding.topAppBar.apply {
+            //back button
+            this.setNavigationOnClickListener {
+                startActivity(Intent(this@AssetDetailActivity, MainActivity::class.java))
+            }
+            title = assetId
         }
 
         binding.topAppBar.setOnMenuItemClickListener { menuItem ->
@@ -129,7 +160,7 @@ class AssetDetailActivity() : AppCompatActivity() {
         chart.axisRight.isEnabled = true
         chart.legend.isEnabled = false
 
-        chart.animateXY(1000, 1000)
+        //chart.animateXY(1000, 1000)
 
         chart.invalidate()
 

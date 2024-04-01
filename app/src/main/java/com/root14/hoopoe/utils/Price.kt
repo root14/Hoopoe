@@ -24,5 +24,10 @@ fun String.convertMarketCap(): String {
 
 fun String.convertPriceChange(): String {
     val amount = this.toDoubleOrNull() ?: return this
-    return String.format("%.2f", amount)
+    val formattedAmount = String.format("%.2f", amount)
+    return if (amount >= 0) {
+        "%+$formattedAmount"
+    } else {
+        "%$formattedAmount"
+    }
 }
