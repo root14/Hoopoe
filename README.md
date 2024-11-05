@@ -11,9 +11,10 @@ Hoopoe is an open-source Android application that allows users to follow cryptoc
 - **Data Fetching**: Integrated Retrofit for efficiently fetching and displaying currency data.
 - **Interactive Charts**: Utilizes the MPAndroidChart library for visualizing currency data through interactive charts.
 
-## Views
+## Youtube Demo
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/bwRc9lGsOGE/0.jpg)](https://www.youtube.com/watch?v=bwRc9lGsOGE)
 
+## Views
 <img src="https://github.com/user-attachments/assets/ffda20cb-334f-467a-83a6-4ace6e2564b4" alt="node3" width="300" height="600">
 <img src="https://github.com/user-attachments/assets/bdee0109-e5f3-47cd-bf88-257b1053e038" alt="hoope1" width="300" height="600">
 <img src="https://github.com/user-attachments/assets/045d671f-12be-4406-a73e-8b42d49adf31" alt="hoope0" width="300" height="600">
